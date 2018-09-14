@@ -9,6 +9,7 @@
   "scripts": {
     "prepublishOnly": "yarn build",
     "build": "babel -Dd dist src && (flow gen-flow-files src/index.js > dist/index.js.flow || true)",
+    "release": "standard-version -i changelog.md",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -18,17 +19,18 @@
     ]
   },
   "dependencies": {
-    "babel-preset-flow": "^6.23.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^9.0.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
     "eslint": "^5.5.0",
     "eslint-plugin-flowtype": "^2.50.0",
     "eslint-plugin-prettier": "^2.6.2",
     "flow-bin": "^0.80.0",
     "jest": "^23.6.0",
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "standard-version": "^4.4.0"
   }
 }
