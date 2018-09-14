@@ -31,7 +31,7 @@ jobs:
          key: v1-yarn-{{ checksum "yarn.lock" }}
          paths:
            - node_modules/
-      - run: yarn eslint
+      - run: yarn lint
 
   flow:
     docker:

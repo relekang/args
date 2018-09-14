@@ -6,5 +6,21 @@
   "repository": "git@github.com:relekang/args.git",
   "author": "Rolf Erik Lekang <me@rolflekang.com>",
   "license": "MIT",
-  "private": false
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "jest": {
+    "testMatch": ["**/test/**/*.tests.js"]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.5.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "flow-bin": "^0.80.0",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.2"
+  }
 }
