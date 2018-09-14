@@ -531,8 +531,7 @@ type JestExtendedMatchersType = {
 };
 
 interface JestExpectType {
-  not:
-    & JestExpectType
+  not: & JestExpectType
     & EnzymeMatchersType
     & DomTestingLibraryType
     & JestJQueryMatchersType
