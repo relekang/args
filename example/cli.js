@@ -31,6 +31,13 @@ args({
         // eslint-disable-next-line no-console
         console.log("Running the command ", JSON.stringify(options));
       }
+    },
+    error: {
+      name: "error",
+      help: "Example error handling",
+      command: _options => {
+        throw new Error("¯_(ツ)_/¯");
+      }
     }
   }
 })(process.argv);

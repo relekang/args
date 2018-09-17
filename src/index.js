@@ -15,6 +15,10 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
 
 export default function args(config: Config) {
   return ([_node, _program, subCommand, ...rest]: Array<string>) => {
-    return __args(config, subCommand || "help", rest);
+    return __args(config, subCommand || "help", rest).catch(error => {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      process.exit(1);
+    });
   };
 }
