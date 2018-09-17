@@ -2,14 +2,21 @@
 import chalk from "chalk";
 import wrap from "word-wrap";
 
+import type { Config, CommandConfig, CommandOption, Options } from "./types";
+
 import * as logger from "./logger";
 
-export function createCommandsList(commands) {
+function values<A>(o: { [key: string]: A }): Array<A> {
+  // $FlowFixMe
+  return Object.values(o);
+}
+
+export function createCommandsList(commands: { [key: string]: CommandConfig }) {
   const length = Math.max(
     0,
-    ...Object.values(commands).map(({ name }) => name.length)
+    ...values(commands).map(({ name }) => name.length)
   );
-  return Object.values(commands)
+  return values(commands)
     .map(command => {
       const spacing = new Array(Math.max(1, length - command.name.length + 1))
         .fill(" ")
@@ -19,13 +26,13 @@ export function createCommandsList(commands) {
     .join("\n");
 }
 
-export function createPositionalUsage(command) {
+export function createPositionalUsage(command: CommandConfig) {
   return (command.positionalOptions || [])
     .map(({ name, required }) => (required ? `<${name}>` : `[<${name}>]`))
     .join(" ");
 }
 
-export function createUsageString(name, command) {
+export function createUsageString(name: string, command: CommandConfig) {
   const positionals = createPositionalUsage(command);
   return (
     `Usage: ${name} ${command.name}` +
@@ -33,10 +40,12 @@ export function createUsageString(name, command) {
     (command.namedOptions ? " [--options]" : "")
   );
 }
-export function createOptionHelpString(option) {
+
+export function createOptionHelpString(option: CommandOption) {
   return `  - ${option.name}${option.help ? ` - ${option.help}` : ""}`;
 }
-export function createSubCommandHelp(name, command) {
+
+export function createSubCommandHelp(name: string, command: CommandConfig) {
   let lines = [
     chalk`{bold ${command.name}} - ${command.help} `,
     "\n",
@@ -47,17 +56,20 @@ export function createSubCommandHelp(name, command) {
     lines = [...lines, "", chalk.bold("Arguments:")];
     lines = [
       ...lines,
-      ...command.positionalOptions.map(createOptionHelpString)
+      ...(command.positionalOptions || []).map(createOptionHelpString)
     ];
   }
   if (command.namedOptions) {
     lines = [...lines, "", chalk.bold("Options:")];
-    lines = [...lines, ...command.namedOptions.map(createOptionHelpString)];
+    lines = [
+      ...lines,
+      ...(command.namedOptions || []).map(createOptionHelpString)
+    ];
   }
   return lines.join("\n");
 }
 
-export function help(config, options) {
+export function help(config: Config, options: Options) {
   const dashes = "--------------------------";
   const subCommand = config.commands[options._[0]];
   logger.error(chalk`{gray ${dashes}} {bold ${config.name}} {gray ${dashes}}`);

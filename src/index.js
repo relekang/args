@@ -2,13 +2,10 @@
 import mri from "mri";
 
 import { help } from "./help";
-
-export type Config = {
-  name: string
-};
+import type { Config, Options } from "./types";
 
 function __args(config: Config, subCommand: string, args: Array<string>) {
-  const options = mri(args);
+  const options: Options = mri(args);
   if (subCommand === "help") {
     return help(config, options);
   }

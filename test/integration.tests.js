@@ -1,7 +1,7 @@
 // @flow
 import args from "../src";
 import * as logger from "../src/logger";
-import type { Config } from "../src";
+import type { Config } from "../src/types";
 
 jest.mock("../src/logger", () => ({ error: jest.fn(), log: jest.fn() }));
 
@@ -27,7 +27,9 @@ const config: Config = {
 };
 
 beforeEach(() => {
+  // $FlowFixMe flow does not understand mocks
   logger.error.mockReset();
+  // $FlowFixMe flow does not understand mocks
   logger.log.mockReset();
 });
 

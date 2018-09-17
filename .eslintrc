@@ -21,7 +21,7 @@ rules:
         ignoreRestSiblings: true
     }
   ]
-overrides: 
+overrides:
   - files: ["*.tests.js"]
     env: {jest: true}
   - files: ["flow-typed/**"]
