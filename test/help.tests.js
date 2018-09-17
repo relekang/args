@@ -5,7 +5,7 @@ test("createPositionalUsage should create string of positionals options", () => 
   const command = {
     name: "command",
     help: "Test command",
-    command: () => {},
+    run: () => {},
     positionalOptions: [
       { name: "first", required: true },
       { name: "second", required: false }
@@ -19,7 +19,7 @@ test("createPositionalUsage should create empty string if no optionals", () => {
   const command = {
     name: "command",
     help: "Test command",
-    command: () => {},
+    run: () => {},
     positionalOptions: []
   };
 
@@ -30,7 +30,7 @@ test("createUsageString should create usage string", () => {
   const command = {
     name: "command",
     help: "Test command",
-    command: () => {},
+    run: () => {},
     positionalOptions: [
       { name: "first", required: true },
       { name: "second", required: false }
@@ -47,7 +47,7 @@ test("createUsageString should create usage string without positionals", () => {
   const command = {
     name: "command",
     help: "Test command",
-    command: () => {},
+    run: () => {},
     namedOptions: [{ name: "test" }]
   };
 
@@ -60,7 +60,7 @@ test("createUsageString should create usage string without optionals", () => {
   const command = {
     name: "command",
     help: "Test command",
-    command: () => {}
+    run: () => {}
   };
 
   expect(createUsageString("./cli.js", command)).toEqual(

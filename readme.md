@@ -50,7 +50,7 @@ export and object with all the properties. The available properties are:
 * name - required string - The name of the command like `./cli.js <name>`
 * help - required string - A small help string shown on the command list help screen
 * manual - optional string - A multiline description of how to use the command with usage examples etc.
-* command - required (async) function - The actual command that will be run with options as first argument, can be async.
+* run - required (async) function - The code that will be executed with options as first argument, can be async.
 * positionalOptions - optional array of options - The positional options for the command. See options below for fields.
 * namedOptions - optional array of options - The positional options for the command. See options below for fields.
 

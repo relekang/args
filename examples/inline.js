@@ -10,7 +10,7 @@ args({
       help: "Testing testing",
       manual:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis ligula, vulputate tincidunt consectetur sed, euismod sit amet dolor. Cras commodo eu mi sed consectetur. Quisque eget mauris felis. Sed accumsan quis dui quis consequat. Proin a magna mauris. Aenean sit amet mauris sem. Nam tellus eros, malesuada vel diam eget, consectetur sodales nisl. Quisque non libero auctor, tempor nisl eu, rutrum ante. Suspendisse eget lacus ex. ",
-      command: options => {
+      run: options => {
         // eslint-disable-next-line no-console
         console.log("Running the command ", JSON.stringify(options));
       },
@@ -27,7 +27,7 @@ args({
     "long-named-command": {
       name: "long-named-command",
       help: "Command with long name",
-      command: options => {
+      run: options => {
         // eslint-disable-next-line no-console
         console.log("Running the command ", JSON.stringify(options));
       }
@@ -35,7 +35,7 @@ args({
     error: {
       name: "error",
       help: "Example error handling",
-      command: _options => {
+      run: _options => {
         throw new Error("¯_(ツ)_/¯");
       }
     }

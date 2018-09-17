@@ -9,7 +9,7 @@ export type CommandOption = {
 export type CommandConfig = {
   name: string,
   help: string,
-  command: Options => void | Promise<void>,
+  run: Options => void | Promise<void>,
   manual?: string,
   positionalOptions?: Array<CommandOption>,
   namedOptions?: Array<CommandOption>

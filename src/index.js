@@ -22,7 +22,7 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
   }
 
   if (command) {
-    await command.command(options);
+    await command.run(options);
   } else {
     throw new Error("Unknown command");
   }
