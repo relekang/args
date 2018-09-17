@@ -1,17 +1,39 @@
 // @flow
+/* eslint-disable global-require */
 import chalk from "chalk";
 import wrap from "word-wrap";
+import path from "path";
+import fs from "fs";
+import { promisify } from "util";
 
 import type { Config, CommandConfig, CommandOption, Options } from "./types";
 
 import * as logger from "./logger";
+
+const readdir = promisify(fs.readdir);
 
 function values<A>(o: { [key: string]: A }): Array<A> {
   // $FlowFixMe
   return Object.values(o);
 }
 
-export function createCommandsList(commands: { [key: string]: CommandConfig }) {
+async function getCommands(config): { [key: string]: CommandConfig } {
+  if (config.commands) {
+    return config.commands;
+  }
+  return (await readdir(config.commandsPath)).reduce(
+    (lastValue, file) => ({
+      ...lastValue,
+      // $FlowFixMe
+      [file.replace(/.js$/, "")]: require(path.join(config.commandsPath, file))
+    }),
+    {}
+  );
+}
+
+export async function createCommandsList(config: Config) {
+  const commands = await getCommands(config);
+
   const length = Math.max(
     0,
     ...values(commands).map(({ name }) => name.length)
@@ -69,17 +91,29 @@ export function createSubCommandHelp(name: string, command: CommandConfig) {
   return lines.join("\n");
 }
 
-export function help(config: Config, options: Options) {
+function findSubCommand(config: Config, name: string): ?CommandConfig {
+  if (config.commands) {
+    // $FlowFixMe
+    return config.commands[name];
+  } else {
+    try {
+      // $FlowFixMe
+      return require(path.join(config.commandsPath, "name"));
+    } catch (error) {
+      return;
+    }
+  }
+}
+
+export async function help(config: Config, options: Options) {
   const dashes = "--------------------------";
-  const subCommand = config.commands[options._[0]];
+  const subCommand = findSubCommand(config, options._[0]);
   logger.error(chalk`{gray ${dashes}} {bold ${config.name}} {gray ${dashes}}`);
   logger.error("");
   if (subCommand) {
     logger.error(createSubCommandHelp(config.name, subCommand));
   } else {
     logger.error(chalk.bold`Commands: `);
-    if (config.commands) {
-      logger.error(createCommandsList(config.commands));
-    }
+    logger.error(await createCommandsList(config));
   }
 }

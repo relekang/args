@@ -15,10 +15,15 @@ export type CommandConfig = {
   namedOptions?: Array<CommandOption>
 };
 
-export type Config = {
-  name: string,
-  commands: { [key: string]: CommandConfig }
-};
+export type Config =
+  | {
+      name: string,
+      commands: { [key: string]: CommandConfig }
+    }
+  | {
+      name: string,
+      commandsPath: string
+    };
 
 export type Options = {
   _: Array<string>,

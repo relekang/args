@@ -13,7 +13,7 @@ const config: Config = {
       help: "Testing testing",
       manual:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis ligula, vulputate tincidunt consectetur sed, euismod sit amet dolor. Cras commodo eu mi sed consectetur. Quisque eget mauris felis. Sed accumsan quis dui quis consequat. Proin a magna mauris. Aenean sit amet mauris sem. Nam tellus eros, malesuada vel diam eget, consectetur sodales nisl. Quisque non libero auctor, tempor nisl eu, rutrum ante. Suspendisse eget lacus ex. ",
-      command: () => {},
+      command: jest.fn(),
       positionalOptions: [
         { name: "first", required: true },
         { name: "second", required: false }
@@ -35,19 +35,22 @@ beforeEach(() => {
   logger.log.mockReset();
 });
 
-test("args should parse the args", () => {
-  expect(args(config)(["node", "cli", "test"])).toEqual({ _: [] });
+test("args should parse the args", async () => {
+  await args(config)(["node", "cli", "test"]);
+
+  // $FlowFixMe
+  expect(config.commands.test.command).toBeCalledWith({ _: [] });
 });
 
-test("args should show help screen", () => {
-  args(config)(["node", "cli", "help"]);
+test("args should show help screen", async () => {
+  await args(config)(["node", "cli", "help"]);
 
   // $FlowFixMe flow does not understand mocks
   expect(logger.error.mock.calls.join("\n")).toMatchSnapshot();
 });
 
-test("args should show help screen for specific command", () => {
-  args(config)(["node", "cli", "help", "test"]);
+test("args should show help screen for specific command", async () => {
+  await args(config)(["node", "cli", "help", "test"]);
 
   // $FlowFixMe flow does not understand mocks
   expect(logger.error.mock.calls.join("\n")).toMatchSnapshot();
