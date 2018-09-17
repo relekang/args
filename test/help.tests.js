@@ -1,5 +1,4 @@
 import { createPositionalUsage, createUsageString } from "../src/help";
-import { create } from "handlebars";
 
 test("createPositionalUsage should create string of positionals options", () => {
   const command = {
