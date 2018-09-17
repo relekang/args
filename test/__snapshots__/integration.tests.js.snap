@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`args should show help screen 1`] = `
+"[90m--------------------------[39m [1msupercli[22m [90m--------------------------[39m
+
+[1mCommands:[22m
+test                - Testing testing
+long-named-command  - Command with long name"
+`;
+
+exports[`args should show help screen for specific command 1`] = `
+"[90m--------------------------[39m [1msupercli[22m [90m--------------------------[39m
+
+[1mtest[22m - Testing testing
+
+
+Usage: supercli test <first> [<second>] [--options]
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis 
+  ligula, vulputate tincidunt consectetur sed, euismod sit amet dolor. Cras 
+  commodo eu mi sed consectetur. Quisque eget mauris felis. Sed accumsan quis dui 
+  quis consequat. Proin a magna mauris. Aenean sit amet mauris sem. Nam tellus 
+  eros, malesuada vel diam eget, consectetur sodales nisl. Quisque non libero 
+  auctor, tempor nisl eu, rutrum ante. Suspendisse eget lacus ex. 
+
+[1mArguments:[22m
+  - first
+  - second
+
+[1mOptions:[22m
+  - verbose"
+`;

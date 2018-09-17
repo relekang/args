@@ -19,6 +19,9 @@
     ]
   },
   "dependencies": {
+    "chalk": "^2.4.1",
+    "mri": "^1.1.1",
+    "word-wrap": "^1.2.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
