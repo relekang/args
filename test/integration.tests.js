@@ -13,6 +13,7 @@ const config: Config = {
       help: "Testing testing",
       manual:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis ligula, vulputate tincidunt consectetur sed, euismod sit amet dolor. Cras commodo eu mi sed consectetur. Quisque eget mauris felis. Sed accumsan quis dui quis consequat. Proin a magna mauris. Aenean sit amet mauris sem. Nam tellus eros, malesuada vel diam eget, consectetur sodales nisl. Quisque non libero auctor, tempor nisl eu, rutrum ante. Suspendisse eget lacus ex. ",
+      command: () => {},
       positionalOptions: [
         { name: "first", required: true },
         { name: "second", required: false }
@@ -21,7 +22,8 @@ const config: Config = {
     },
     "long-named-command": {
       name: "long-named-command",
-      help: "Command with long name"
+      help: "Command with long name",
+      command: () => {}
     }
   }
 };
