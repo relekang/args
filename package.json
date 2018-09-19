@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
+    "extendable-error": "^0.1.5",
     "mri": "^1.1.1",
     "word-wrap": "^1.2.3"
   },

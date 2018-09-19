@@ -4,7 +4,11 @@ import mri from "mri";
 import path from "path";
 
 import { help } from "./help";
+import * as logger from "./logger";
+import { CliError } from "./errors";
 import type { CommandConfig, Config, Options } from "./types";
+
+export * from "./errors";
 
 async function __args(config: Config, subCommand: string, args: Array<string>) {
   const options: Options = mri(args);
@@ -24,16 +28,24 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
   if (command) {
     await command.run(options);
   } else {
-    throw new Error("Unknown command");
+    throw new CliError("Unknown command", 1);
   }
 }
 
-export default function args(config: Config) {
+export function args(config: Config) {
   return ([_node, _program, subCommand, ...rest]: Array<string>) => {
     return __args(config, subCommand || "help", rest).catch(error => {
-      // eslint-disable-next-line no-console
-      console.error(error);
+      if (
+        error.constructor === CliError ||
+        error.constructor.constructor === CliError
+      ) {
+        logger.error(error.toString());
+        process.exit(error.exitCode);
+      }
+      logger.error(error);
       process.exit(1);
     });
   };
 }
+
+export default args;

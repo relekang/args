@@ -1,6 +1,6 @@
 #!/usr/bin/env babel-node
 // @flow
-import args from "../src";
+import { args, CliError } from "../src";
 
 args({
   name: "supercli",
@@ -36,7 +36,7 @@ args({
       name: "error",
       help: "Example error handling",
       run: _options => {
-        throw new Error("¯_(ツ)_/¯");
+        throw new CliError("¯\\_(ツ)_/¯", 1);
       }
     }
   }
