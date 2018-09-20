@@ -98,7 +98,7 @@ function findSubCommand(config: Config, name: string): ?CommandConfig {
   } else {
     try {
       // $FlowFixMe
-      return require(path.join(config.commandsPath, "name"));
+      return require(path.join(config.commandsPath, name));
     } catch (error) {
       return;
     }
