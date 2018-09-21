@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-alpha.7"></a>
+# [1.0.0-alpha.7](https://github.com/relekang/args/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2018-09-21)
+
+
+### Bug Fixes
+
+* Add filter of js files in find commands ([36faf8c](https://github.com/relekang/args/commit/36faf8c))
+
+
+
 <a name="1.0.0-alpha.6"></a>
 # [1.0.0-alpha.6](https://github.com/relekang/args/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2018-09-21)
 
