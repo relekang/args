@@ -16,7 +16,7 @@ const config: Config = {
       run: jest.fn(),
       positionalOptions: [
         { name: "first", required: true },
-        { name: "second", required: false }
+        { name: "second", required: false, transform: Number }
       ],
       namedOptions: [{ name: "verbose", required: true }]
     },
@@ -35,11 +35,26 @@ beforeEach(() => {
   logger.log.mockReset();
 });
 
-test("args should parse the args", async () => {
-  await args(config)(["node", "cli", "test"]);
+test("args should parse the positional options", async () => {
+  await args(config)(["node", "cli", "test", "first-argument", "200"]);
 
   // $FlowFixMe
-  expect(config.commands.test.run).toBeCalledWith({ _: [] });
+  expect(config.commands.test.run).toBeCalledWith({
+    _: ["first-argument", "200"],
+    first: "first-argument",
+    second: 200
+  });
+});
+
+test("args should parse the named option", async () => {
+  await args(config)(["node", "cli", "test", "first-argument", "--verbose"]);
+
+  // $FlowFixMe
+  expect(config.commands.test.run).toBeCalledWith({
+    _: ["first-argument"],
+    verbose: true,
+    first: "first-argument"
+  });
 });
 
 test("args should show help screen", async () => {

@@ -3,7 +3,9 @@
 export type CommandOption = {
   name: string,
   help?: string,
-  required?: boolean
+  required?: boolean,
+  transform?: Function,
+  validate?: Function
 };
 
 export type CommandConfig = {

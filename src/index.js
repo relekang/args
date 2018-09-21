@@ -10,8 +10,26 @@ import type { CommandConfig, Config, Options } from "./types";
 
 export * from "./errors";
 
+function parse(commandConfig, options) {
+  const positionals = (commandConfig.positionalOptions || []).reduce(
+    (lastValue, item, index) => {
+      const value = options._[index];
+      if (item.required && !value) {
+        throw new CliError(`Missing required argument "${item.name}"`, 1);
+      }
+      if (!value) return lastValue;
+      return {
+        ...lastValue,
+        [item.name]: item.transform ? item.transform(value) : value
+      };
+    },
+    {}
+  );
+  return { ...options, ...positionals };
+}
+
 async function __args(config: Config, subCommand: string, args: Array<string>) {
-  const options: Options = mri(args);
+  let options: Options = mri(args);
   if (subCommand === "help") {
     return help(config, options);
   }
@@ -24,6 +42,8 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
     // $FlowFixMe
     command = require(path.join(config.commandsPath, subCommand));
   }
+
+  options = parse(command, options);
 
   if (command) {
     await command.run(options);
@@ -40,10 +60,14 @@ export function args(config: Config) {
         error.constructor.constructor === CliError
       ) {
         logger.error(error.toString());
-        process.exit(error.exitCode);
+        if (process.env.NODE_ENV !== "test") {
+          process.exit(error.exitCode);
+        }
       }
       logger.error(error);
-      process.exit(1);
+      if (process.env.NODE_ENV !== "test") {
+        process.exit(1);
+      }
     });
   };
 }
