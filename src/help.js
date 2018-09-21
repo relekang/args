@@ -21,7 +21,7 @@ async function getCommands(config): { [key: string]: CommandConfig } {
   if (config.commands) {
     return config.commands;
   }
-  return (await readdir(config.commandsPath)).reduce(
+  return (await readdir(config.commandsPath)).filter(/\.js$/.test).reduce(
     (lastValue, file) => ({
       ...lastValue,
       // $FlowFixMe
