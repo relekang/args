@@ -21,14 +21,19 @@ async function getCommands(config): { [key: string]: CommandConfig } {
   if (config.commands) {
     return config.commands;
   }
-  return (await readdir(config.commandsPath)).filter(/\.js$/.test).reduce(
-    (lastValue, file) => ({
-      ...lastValue,
-      // $FlowFixMe
-      [file.replace(/.js$/, "")]: require(path.join(config.commandsPath, file))
-    }),
-    {}
-  );
+  return (await readdir(config.commandsPath))
+    .filter(file => /\.js$/.test(file))
+    .reduce(
+      (lastValue, file) => ({
+        ...lastValue,
+        // $FlowFixMe
+        [file.replace(/.js$/, "")]: require(path.join(
+          config.commandsPath,
+          file
+        ))
+      }),
+      {}
+    );
 }
 
 export async function createCommandsList(config: Config) {
