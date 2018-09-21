@@ -2,7 +2,9 @@
 
 [![CircleCI](https://circleci.com/gh/relekang/args/tree/master.svg?style=svg)](https://circleci.com/gh/relekang/args/tree/master)
 
-Just another lazy argument parser.
+Just another _opinionated_ lazy argument parser. This library is made to be
+opinionated about the structure of node cli application. It strives to give
+you a most of what you would need out of the box if you agree with its opinions.
 
 ## Installation
 
