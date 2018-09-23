@@ -36,7 +36,7 @@ args({
       name: "error",
       help: "Example error handling",
       run: _options => {
-        throw new CliError("¯\\_(ツ)_/¯", 1);
+        throw new CliError({ message: "¯\\_(ツ)_/¯", exitCode: 1 });
       }
     }
   }

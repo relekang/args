@@ -2,6 +2,7 @@
 /* eslint-disable global-require */
 import mri from "mri";
 import path from "path";
+import chalk from "chalk";
 
 import { help } from "./help";
 import * as logger from "./logger";
@@ -25,32 +26,47 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
     command = require(path.join(config.commandsPath, subCommand));
   }
 
-  const options: Options = parse(command, args);
-
   if (command) {
+    const options: Options = parse(command, args);
     await command.run(options);
   } else {
-    throw new CliError("Unknown command", 1);
+    throw new CliError({
+      message: "Unknown command",
+      exitCode: 1,
+      showHelp: true
+    });
   }
 }
 
 export function args(config: Config) {
   return ([_node, _program, subCommand, ...rest]: Array<string>) => {
-    return __args(config, subCommand || "help", rest).catch(error => {
-      if (
-        error.constructor === CliError ||
-        error.constructor.constructor === CliError
-      ) {
-        logger.error(error.toString());
-        if (process.env.NODE_ENV !== "test") {
-          process.exit(error.exitCode);
+    return __args(config, subCommand || "help", rest)
+      .catch(async error => {
+        if (
+          error.constructor === CliError ||
+          error.constructor.constructor === CliError
+        ) {
+          if (error.showHelp) {
+            logger.error("\n");
+            logger.error(chalk.bold(chalk.red(error.toString())));
+            logger.error("\n\n");
+            await help(config, mri(rest));
+          } else {
+            logger.error(error.toString());
+          }
+          if (process.env.NODE_ENV !== "test") {
+            process.exit(error.exitCode);
+          }
+        } else {
+          logger.error(error);
         }
-      }
-      logger.error(error);
-      if (process.env.NODE_ENV !== "test") {
-        process.exit(1);
-      }
-    });
+        if (process.env.NODE_ENV !== "test") {
+          process.exit(1);
+        }
+      })
+      .catch(error => {
+        logger.error(error.toString());
+      });
   };
 }
 

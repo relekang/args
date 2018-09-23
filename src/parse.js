@@ -8,13 +8,12 @@ type Options = {
   [key: string]: mixed
 };
 
-function evaluateOption(commandConfig, item, value) {
+function evaluateOption(item, value) {
   if (item.required && !value) {
     throw new CliError({
       message: `Missing required argument "${item.name}"`,
       exitCode: 1,
-      showHelp: true,
-      commandConfig
+      showHelp: true
     });
   }
   value = item.transform ? item.transform(value) : value;
@@ -27,8 +26,7 @@ function evaluateOption(commandConfig, item, value) {
       throw new CliError({
         message: `Validation error on ${item.name}: ${error}`,
         exitCode: 1,
-        showHelp: true,
-        commandConfig
+        showHelp: true
       });
     }
   }
@@ -43,7 +41,7 @@ export function parse(
 
   const positionals = (commandConfig.positionalOptions || []).reduce(
     (lastValue, item, index) => {
-      const value = evaluateOption(commandConfig, item, options._[index]);
+      const value = evaluateOption(item, options._[index]);
       if (value !== false && !value) {
         return lastValue;
       }
@@ -56,7 +54,7 @@ export function parse(
   );
 
   const named = (commandConfig.namedOptions || []).reduce((lastValue, item) => {
-    const value = evaluateOption(commandConfig, item, options[item.name]);
+    const value = evaluateOption(item, options[item.name]);
     if (value !== false && !value) {
       return lastValue;
     }
