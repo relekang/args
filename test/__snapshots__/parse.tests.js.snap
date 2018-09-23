@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parse should throw on missing required named 1`] = `"Missing required argument \\"required\\""`;
+
+exports[`parse should throw on missing required positional 1`] = `"Missing required argument \\"first\\""`;
+
+exports[`parse should throw on named valdiation error 1`] = `"Validation error on validate: must be 't'"`;
+
+exports[`parse should throw on positional validation error 1`] = `"Validation error on third: must be 't'"`;

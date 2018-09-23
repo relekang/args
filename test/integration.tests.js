@@ -18,7 +18,7 @@ const config: Config = {
         { name: "first", required: true },
         { name: "second", required: false, transform: Number }
       ],
-      namedOptions: [{ name: "verbose", required: true }]
+      namedOptions: [{ name: "verbose", required: false }]
     },
     "long-named-command": {
       name: "long-named-command",

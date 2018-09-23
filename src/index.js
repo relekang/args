@@ -6,32 +6,14 @@ import path from "path";
 import { help } from "./help";
 import * as logger from "./logger";
 import { CliError } from "./errors";
+import { parse } from "./parse";
 import type { CommandConfig, Config, Options } from "./types";
 
 export * from "./errors";
 
-function parse(commandConfig, options) {
-  const positionals = (commandConfig.positionalOptions || []).reduce(
-    (lastValue, item, index) => {
-      const value = options._[index];
-      if (item.required && !value) {
-        throw new CliError(`Missing required argument "${item.name}"`, 1);
-      }
-      if (!value) return lastValue;
-      return {
-        ...lastValue,
-        [item.name]: item.transform ? item.transform(value) : value
-      };
-    },
-    {}
-  );
-  return { ...options, ...positionals };
-}
-
 async function __args(config: Config, subCommand: string, args: Array<string>) {
-  let options: Options = mri(args);
   if (subCommand === "help") {
-    return help(config, options);
+    return help(config, mri(args));
   }
 
   let command: CommandConfig;
@@ -43,7 +25,7 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
     command = require(path.join(config.commandsPath, subCommand));
   }
 
-  options = parse(command, options);
+  const options: Options = parse(command, args);
 
   if (command) {
     await command.run(options);
