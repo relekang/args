@@ -44,6 +44,36 @@ const commands = {info, update}
 args({ commands })(process.argv)
 ```
 
+### Requiring setup on first run
+
+`args` takes two options that help with initial setup and installation
+of your cli: `needsSetup` and `setup`.
+
+#### Example
+
+```javascript
+const args = require('@relekang/args')
+const fs = require("fs")
+const {promisfy} = require("util")
+
+const {createConfig} = require("./config")
+const readFile = promisify(fs.readFile)
+
+args({
+  commandsPath: "./commands",
+  needsSetup: async () => {
+      try {
+        const config = JSON.parse(await readFile("~/config"))
+        return true
+      } catch (error) {
+        return false
+      }
+  },
+  setup: createConfig
+})(process.argv)
+
+````
+
 ### Creating a command
 
 The command must either use named export of all the properties or 

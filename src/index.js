@@ -8,11 +8,13 @@ import { help } from "./help";
 import * as logger from "./logger";
 import { CliError } from "./errors";
 import { parse } from "./parse";
+import { setup } from "./setup";
 import type { CommandConfig, Config, Options } from "./types";
 
 export * from "./errors";
 
 async function __args(config: Config, subCommand: string, args: Array<string>) {
+  await setup(config);
   if (subCommand === "help") {
     return help(config, mri(args));
   }

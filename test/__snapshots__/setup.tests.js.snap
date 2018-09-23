@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`setup should throw when needs setup and setup is missing 1`] = `"This cli requires setup, however the setup is not provided."`;

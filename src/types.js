@@ -20,10 +20,14 @@ export type CommandConfig = {
 export type Config =
   | {
       name: string,
+      setup?: () => Promise<void>,
+      needsSetup?: () => Promise<boolean>,
       commands: { [key: string]: CommandConfig }
     }
   | {
       name: string,
+      setup?: () => Promise<void>,
+      needsSetup?: () => Promise<boolean>,
       commandsPath: string
     };
 
