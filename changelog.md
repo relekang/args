@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-alpha.9"></a>
+# [1.0.0-alpha.9](https://github.com/relekang/args/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2018-09-25)
+
+
+### Bug Fixes
+
+* Add support for showing help screen on certain errors ([67caae9](https://github.com/relekang/args/commit/67caae9))
+
+
+### Features
+
+* Add parsing and validation of command options ([bed2396](https://github.com/relekang/args/commit/bed2396))
+* Add support for setup functions ([4da73f7](https://github.com/relekang/args/commit/4da73f7))
+
+
+
 <a name="1.0.0-alpha.8"></a>
 # [1.0.0-alpha.8](https://github.com/relekang/args/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2018-09-21)
 
