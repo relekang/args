@@ -5,7 +5,7 @@ export type CommandOption = {
   help?: string,
   required?: boolean,
   transform?: <A, B>(untransformed: *) => *,
-  validate?: (value: *) => ?string
+  validate?: (value: *) => ?string,
 };
 
 export type CommandConfig = {
@@ -14,7 +14,7 @@ export type CommandConfig = {
   run: Options => void | Promise<void>,
   manual?: string,
   positionalOptions?: Array<CommandOption>,
-  namedOptions?: Array<CommandOption>
+  namedOptions?: Array<CommandOption>,
 };
 
 export type Config =
@@ -22,16 +22,16 @@ export type Config =
       name: string,
       setup?: () => Promise<void>,
       needsSetup?: () => Promise<boolean>,
-      commands: { [key: string]: CommandConfig }
+      commands: { [key: string]: CommandConfig },
     }
   | {
       name: string,
       setup?: () => Promise<void>,
       needsSetup?: () => Promise<boolean>,
-      commandsPath: string
+      commandsPath: string,
     };
 
 export type Options = {
   _: Array<string>,
-  [key: string]: mixed
+  [key: string]: mixed,
 };

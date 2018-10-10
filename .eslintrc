@@ -1,36 +1,8 @@
 ---
 parser: babel-eslint
 extends:
-  - eslint:recommended
-  - plugin:flowtype/recommended
-plugins:
-  - prettier
-  - flowtype
+  - relekang
+  - relekang/configs/jest
+  - relekang/configs/flowtype
 env:
   node: true
-globals:
-  Promise: false
-rules:
-  prettier/prettier: 2
-  no-unused-vars: [2,
-    {
-        vars: "all",
-        args: "after-used",
-        varsIgnorePattern: "^_",
-        argsIgnorePattern: "^_",
-        ignoreRestSiblings: true
-    }
-  ]
-overrides:
-  - files: ["*.tests.js"]
-    env: {jest: true}
-  - files: ["flow-typed/**"]
-    rules:
-      prettier/prettier: 0
-      flowtype/no-types-missing-file-annotation: 0
-      no-unused-vars: 0
-  - files: ["dist/**"]
-    rules:
-      prettier/prettier: 0
-      no-unused-vars: 0
-

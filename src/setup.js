@@ -1,6 +1,6 @@
 // @flow
-import { CliError } from "./errors";
-import type { Config } from "./types";
+import { CliError } from './errors';
+import type { Config } from './types';
 
 export async function setup(config: Config) {
   if (config.needsSetup && (await config.needsSetup())) {
@@ -8,8 +8,8 @@ export async function setup(config: Config) {
       await config.setup();
     } else {
       throw new CliError({
-        message: "This cli requires setup, however the setup is not provided.",
-        exitCode: 1
+        message: 'This cli requires setup, however the setup is not provided.',
+        exitCode: 1,
       });
     }
   }

@@ -1,21 +1,21 @@
 // @flow
 /* eslint-disable global-require */
-import mri from "mri";
-import path from "path";
-import chalk from "chalk";
+import mri from 'mri';
+import path from 'path';
+import chalk from 'chalk';
 
-import { help } from "./help";
-import * as logger from "./logger";
-import { CliError } from "./errors";
-import { parse } from "./parse";
-import { setup } from "./setup";
-import type { CommandConfig, Config, Options } from "./types";
+import { help } from './help';
+import * as logger from './logger';
+import { CliError } from './errors';
+import { parse } from './parse';
+import { setup } from './setup';
+import type { CommandConfig, Config, Options } from './types';
 
-export * from "./errors";
+export * from './errors';
 
 async function __args(config: Config, subCommand: string, args: Array<string>) {
   await setup(config);
-  if (subCommand === "help") {
+  if (subCommand === 'help') {
     return help(config, mri(args));
   }
 
@@ -33,36 +33,36 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
     await command.run(options);
   } else {
     throw new CliError({
-      message: "Unknown command",
+      message: 'Unknown command',
       exitCode: 1,
-      showHelp: true
+      showHelp: true,
     });
   }
 }
 
 export function args(config: Config) {
   return ([_node, _program, subCommand, ...rest]: Array<string>) => {
-    return __args(config, subCommand || "help", rest)
+    return __args(config, subCommand || 'help', rest)
       .catch(async error => {
         if (
           error.constructor === CliError ||
           error.constructor.constructor === CliError
         ) {
           if (error.showHelp) {
-            logger.error("\n");
+            logger.error('\n');
             logger.error(chalk.bold(chalk.red(error.toString())));
-            logger.error("\n\n");
+            logger.error('\n\n');
             await help(config, mri(rest));
           } else {
             logger.error(error.toString());
           }
-          if (process.env.NODE_ENV !== "test") {
+          if (process.env.NODE_ENV !== 'test') {
             process.exit(error.exitCode);
           }
         } else {
           logger.error(error);
         }
-        if (process.env.NODE_ENV !== "test") {
+        if (process.env.NODE_ENV !== 'test') {
           process.exit(1);
         }
       })

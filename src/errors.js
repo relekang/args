@@ -2,7 +2,7 @@
 type CliErrorOptions = {
   message: string,
   exitCode: number,
-  showHelp?: boolean
+  showHelp?: boolean,
 };
 export class CliError extends Error {
   exitCode: number;

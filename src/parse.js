@@ -1,11 +1,11 @@
 // @flow
-import mri from "mri";
-import { CliError } from "./errors";
-import type { CommandConfig } from "./types";
+import mri from 'mri';
+import { CliError } from './errors';
+import type { CommandConfig } from './types';
 
 type Options = {
   _: Array<string>,
-  [key: string]: mixed
+  [key: string]: mixed,
 };
 
 function evaluateOption(item, value) {
@@ -13,20 +13,20 @@ function evaluateOption(item, value) {
     throw new CliError({
       message: `Missing required argument "${item.name}"`,
       exitCode: 1,
-      showHelp: true
+      showHelp: true,
     });
   }
   value = item.transform ? item.transform(value) : value;
   if (!value) {
     return value;
   }
-  if (typeof item.validate === "function") {
+  if (typeof item.validate === 'function') {
     const error = item.validate(value);
     if (error) {
       throw new CliError({
         message: `Validation error on ${item.name}: ${error}`,
         exitCode: 1,
-        showHelp: true
+        showHelp: true,
       });
     }
   }
@@ -47,7 +47,7 @@ export function parse(
       }
       return {
         ...lastValue,
-        [item.name]: value
+        [item.name]: value,
       };
     },
     {}
@@ -60,7 +60,7 @@ export function parse(
     }
     return {
       ...lastValue,
-      [item.name]: value
+      [item.name]: value,
     };
   }, {});
 

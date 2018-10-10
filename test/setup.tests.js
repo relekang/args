@@ -1,17 +1,17 @@
 // @flow
-import { setup } from "../src/setup";
+import { setup } from '../src/setup';
 
-const defaultConfig = { name: "cli", commands: {} };
+const defaultConfig = { name: 'cli', commands: {} };
 
-test("setup should not do anything when needsSetup is not present", () => {
+test('setup should not do anything when needsSetup is not present', () => {
   setup(defaultConfig);
 });
 
-test("setup should not call setup when needsSetup resolves false", async () => {
+test('setup should not call setup when needsSetup resolves false', async () => {
   const config = {
     ...defaultConfig,
     needsSetup: async () => false,
-    setup: jest.fn()
+    setup: jest.fn(),
   };
 
   await setup(config);
@@ -19,11 +19,11 @@ test("setup should not call setup when needsSetup resolves false", async () => {
   expect(config.setup).not.toHaveBeenCalled();
 });
 
-test("setup should call setup when needsSetup resolves true", async () => {
+test('setup should call setup when needsSetup resolves true', async () => {
   const config = {
     ...defaultConfig,
     needsSetup: async () => true,
-    setup: jest.fn()
+    setup: jest.fn(),
   };
 
   await setup(config);
@@ -31,10 +31,10 @@ test("setup should call setup when needsSetup resolves true", async () => {
   expect(config.setup).toHaveBeenCalled();
 });
 
-test("setup should throw when needs setup and setup is missing", async () => {
+test('setup should throw when needs setup and setup is missing', async () => {
   const config = {
     ...defaultConfig,
-    needsSetup: async () => true
+    needsSetup: async () => true,
   };
 
   await expect(setup(config)).rejects.toThrowErrorMatchingSnapshot();
