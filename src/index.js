@@ -42,7 +42,7 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
 
 export function args(config: Config) {
   return ([_node, _program, subCommand, ...rest]: Array<string>) => {
-    return __args(config, subCommand || 'help', rest)
+    return __args(config, subCommand || config.defaultCommand || 'help', rest)
       .catch(async error => {
         if (
           error.constructor === CliError ||

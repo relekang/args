@@ -23,12 +23,14 @@ export type Config =
       setup?: () => Promise<void>,
       needsSetup?: () => Promise<boolean>,
       commands: { [key: string]: CommandConfig },
+      defaultCommand?: string,
     }
   | {
       name: string,
       setup?: () => Promise<void>,
       needsSetup?: () => Promise<boolean>,
       commandsPath: string,
+      defaultCommand?: string,
     };
 
 export type Options = {

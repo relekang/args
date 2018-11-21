@@ -74,6 +74,10 @@ args({
 
 ````
 
+### Global options 
+* name - required string - The name of the cli
+* defaultCommand - optional string - Set a command as default command. This is `"help"` as default.
+
 ### Creating a command
 
 The command must either use named export of all the properties or 
