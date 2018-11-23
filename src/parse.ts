@@ -1,14 +1,8 @@
-// @flow
-import mri from 'mri';
-import { CliError } from './errors';
-import type { CommandConfig } from './types';
+import mri from "mri";
+import { CliError } from "./errors";
+import { CommandConfig, CommandOption, Options } from "./types";
 
-type Options = {
-  _: Array<string>,
-  [key: string]: mixed,
-};
-
-function evaluateOption(item, value) {
+function evaluateOption(item: CommandOption, value: any) {
   if (item.required && !value) {
     throw new CliError({
       message: `Missing required argument "${item.name}"`,

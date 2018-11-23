@@ -1,6 +1,5 @@
-#!/usr/bin/env babel-node
-// @flow
-import { args, CliError } from '../src';
+#!/usr/bin/env ts-node
+import { args, CliError } from "../src";
 
 args({
   name: 'supercli',

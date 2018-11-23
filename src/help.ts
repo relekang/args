@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable global-require */
 import chalk from 'chalk';
 import wrap from 'word-wrap';
@@ -6,7 +5,7 @@ import path from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
 
-import type { Config, CommandConfig, CommandOption, Options } from './types';
+import { Config, CommandConfig, CommandOption, Options } from "./types";
 
 import * as logger from './logger';
 
@@ -17,17 +16,22 @@ function values<A>(o: { [key: string]: A }): Array<A> {
   return Object.values(o);
 }
 
-async function getCommands(config): { [key: string]: CommandConfig } {
+async function getCommands(
+  config: Config
+): Promise<{ [key: string]: CommandConfig }> {
+  // @ts-ignore
   if (config.commands) {
+    // @ts-ignore
     return config.commands;
   }
+  // @ts-ignore
   return (await readdir(config.commandsPath))
-    .filter(file => /\.js$/.test(file))
+    .filter(file => /\.[jt]s$/.test(file))
     .reduce(
       (lastValue, file) => ({
         ...lastValue,
-        // $FlowFixMe
-        [file.replace(/.js$/, '')]: require(path.join(
+        [file.replace(/.[jt]s$/, "")]: require(path.join(
+          // @ts-ignore
           config.commandsPath,
           file
         )),
@@ -96,16 +100,20 @@ export function createSubCommandHelp(name: string, command: CommandConfig) {
   return lines.join('\n');
 }
 
-function findSubCommand(config: Config, name: string): ?CommandConfig {
+function findSubCommand(
+  config: Config,
+  name: string
+): CommandConfig | undefined {
+  // @ts-ignore
   if (config.commands) {
-    // $FlowFixMe
+    // @ts-ignore
     return config.commands[name];
   } else {
     try {
-      // $FlowFixMe
+      // @ts-ignore
       return require(path.join(config.commandsPath, name));
     } catch (error) {
-      return;
+      return undefined;
     }
   }
 }

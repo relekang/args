@@ -3,6 +3,6 @@ export const name = 'test';
 
 export const help = 'Testing testing';
 
-export function run(options) {
-  console.log('Running command', JSON.stringify(options));
+export function run(options: any) {
+  console.log("Running command", JSON.stringify(options));
 }

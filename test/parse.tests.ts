@@ -1,6 +1,5 @@
-// @flow
-import { parse } from '../src/parse';
-import type { CommandOption } from '../src/types';
+import { parse } from "../src/parse";
+import { CommandOption } from "../src/types";
 
 const run = jest.fn();
 const positionalOptions: Array<CommandOption> = [
@@ -19,8 +18,8 @@ const namedOptions: Array<CommandOption> = [
   {
     name: 'validate',
     required: false,
-    validate: value => (value !== 't' ? "must be 't'" : null),
-  },
+    validate: (value: string) => (value !== "t" ? "must be 't'" : null)
+  }
 ];
 
 test('parse should parse positional options', () => {
@@ -67,9 +66,9 @@ test('parse should parse named options', () => {
   });
 });
 
-test('parse should parse boolean named options', () => {
-  const parser = args =>
-    parse({ name: 't', help: 't', namedOptions, run }, args);
+test("parse should parse boolean named options", () => {
+  const parser = (args: string[]) =>
+    parse({ name: "t", help: "t", namedOptions, run }, args);
 
   expect(parser('--required o/ --bool'.split(' '))).toEqual({
     _: [],

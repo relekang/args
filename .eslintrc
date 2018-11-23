@@ -1,8 +1,7 @@
 ---
-parser: babel-eslint
 extends:
   - relekang
   - relekang/configs/jest
-  - relekang/configs/flowtype
+  - relekang/configs/typescript
 env:
   node: true

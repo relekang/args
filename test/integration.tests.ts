@@ -1,7 +1,6 @@
-// @flow
-import args from '../src';
-import * as logger from '../src/logger';
-import type { Config } from '../src/types';
+import args from "../src";
+import * as logger from "../src/logger";
+import { Config } from "../src/types";
 
 jest.mock('../src/logger', () => ({ error: jest.fn(), log: jest.fn() }));
 
@@ -29,16 +28,15 @@ const config: Config = {
 };
 
 beforeEach(() => {
-  // $FlowFixMe flow does not understand mocks
+  // @ts-ignore
   logger.error.mockReset();
-  // $FlowFixMe flow does not understand mocks
+  // @ts-ignore
   logger.log.mockReset();
 });
 
 test('args should parse the positional options', async () => {
   await args(config)(['node', 'cli', 'test', 'first-argument', '200']);
 
-  // $FlowFixMe
   expect(config.commands.test.run).toBeCalledWith({
     _: ['first-argument', '200'],
     first: 'first-argument',
@@ -49,7 +47,6 @@ test('args should parse the positional options', async () => {
 test('args should parse the named option', async () => {
   await args(config)(['node', 'cli', 'test', 'first-argument', '--verbose']);
 
-  // $FlowFixMe
   expect(config.commands.test.run).toBeCalledWith({
     _: ['first-argument'],
     verbose: true,
@@ -60,13 +57,13 @@ test('args should parse the named option', async () => {
 test('args should show help screen', async () => {
   await args(config)(['node', 'cli', 'help']);
 
-  // $FlowFixMe flow does not understand mocks
-  expect(logger.error.mock.calls.join('\n')).toMatchSnapshot();
+  // @ts-ignore flow does not understand mocks
+  expect(logger.error.mock.calls.join("\n")).toMatchSnapshot();
 });
 
 test('args should show help screen for specific command', async () => {
   await args(config)(['node', 'cli', 'help', 'test']);
 
-  // $FlowFixMe flow does not understand mocks
-  expect(logger.error.mock.calls.join('\n')).toMatchSnapshot();
+  // @ts-ignore flow does not understand mocks
+  expect(logger.error.mock.calls.join("\n")).toMatchSnapshot();
 });

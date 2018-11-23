@@ -1,5 +1,4 @@
-// @flow
-import { createPositionalUsage, createUsageString } from '../src/help';
+import { createPositionalUsage, createUsageString } from "../src/help";
 
 test('createPositionalUsage should create string of positionals options', () => {
   const command = {

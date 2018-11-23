@@ -1,15 +1,14 @@
-// @flow
 /* eslint-disable global-require */
 import mri from 'mri';
 import path from 'path';
 import chalk from 'chalk';
 
-import { help } from './help';
-import * as logger from './logger';
-import { CliError } from './errors';
-import { parse } from './parse';
-import { setup } from './setup';
-import type { CommandConfig, Config, Options } from './types';
+import { help } from "./help";
+import * as logger from "./logger";
+import { CliError } from "./errors";
+import { parse } from "./parse";
+import { setup } from "./setup";
+import { CommandConfig, Config, Options } from "./types";
 
 export * from './errors';
 
@@ -20,11 +19,12 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
   }
 
   let command: CommandConfig;
+  // @ts-ignore
   if (config.commands) {
-    // $FlowFixMe
+    // @ts-ignore
     command = config.commands[subCommand];
   } else {
-    // $FlowFixMe
+    // @ts-ignore
     command = require(path.join(config.commandsPath, subCommand));
   }
 

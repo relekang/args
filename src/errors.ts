@@ -1,8 +1,7 @@
-// @flow
 type CliErrorOptions = {
-  message: string,
-  exitCode: number,
-  showHelp?: boolean,
+  message: string;
+  exitCode: number;
+  showHelp?: boolean;
 };
 export class CliError extends Error {
   exitCode: number;
@@ -12,6 +11,8 @@ export class CliError extends Error {
     super(message);
     this.exitCode = exitCode;
     this.showHelp = showHelp || false;
+
+    Object.setPrototypeOf(this, CliError.prototype);
   }
 
   toString() {
