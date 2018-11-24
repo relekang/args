@@ -19,8 +19,8 @@ export type CommandConfig = {
 
 export interface BaseConfig {
   name: string;
-  setup?: () => Promise<void>;
-  needsSetup?: () => Promise<boolean>;
+  setup?: () => Promise<void> | void;
+  needsSetup?: () => Promise<boolean> | boolean;
   defaultCommand?: string;
 }
 
