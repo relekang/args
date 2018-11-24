@@ -9,6 +9,7 @@
   "scripts": {
     "prepublishOnly": "yarn build",
     "build": "tsc",
+    "tsc": "tsc",
     "release": "standard-version -i changelog.md",
     "test": "jest",
     "lint": "eslint --ext ts,js ."
