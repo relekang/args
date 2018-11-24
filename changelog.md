@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-alpha.11"></a>
+# [1.0.0-alpha.11](https://github.com/relekang/args/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2018-11-24)
+
+
+### Bug Fixes
+
+* Convert project to typescript ([4ad4160](https://github.com/relekang/args/commit/4ad4160))
+
+
+
 <a name="1.0.0-alpha.10"></a>
 # [1.0.0-alpha.10](https://github.com/relekang/args/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2018-11-21)
 
