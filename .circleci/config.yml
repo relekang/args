@@ -72,5 +72,5 @@ workflows:
     jobs:
       - tests
       - lint
-      - tsc
+      - typescript
       - build
