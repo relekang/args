@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/relekang/args/compare/v1.0.0-alpha.12...v1.0.0) (2018-11-24)
+
+
+### Bug Fixes
+
+* Change type of setup and needsSetup ([9dcfec3](https://github.com/relekang/args/commit/9dcfec3))
+
+
+
 <a name="1.0.0-alpha.12"></a>
 # [1.0.0-alpha.12](https://github.com/relekang/args/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2018-11-24)
 

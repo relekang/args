@@ -1,6 +1,6 @@
 {
   "name": "@relekang/args",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0",
   "description": "Just another argument parser for multimodule cli applications",
   "main": "lib/index.js",
   "repository": "git@github.com:relekang/args.git",
