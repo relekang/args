@@ -5,7 +5,7 @@ import path from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
 
-import { Config, CommandConfig, CommandOption, Options } from "./types";
+import { Config, CommandConfig, CommandOption, Options } from './types';
 
 import * as logger from './logger';
 
@@ -30,7 +30,7 @@ async function getCommands(
     .reduce(
       (lastValue, file) => ({
         ...lastValue,
-        [file.replace(/.[jt]s$/, "")]: require(path.join(
+        [file.replace(/.[jt]s$/, '')]: require(path.join(
           // @ts-ignore
           config.commandsPath,
           file

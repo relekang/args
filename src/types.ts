@@ -1,11 +1,11 @@
-import mri from "mri";
+import { Argv } from 'mri';
 
 export type CommandOption<A = any, B = any> = {
   name: string;
   help?: string;
   required?: boolean;
   transform?: (untransformed: A) => B;
-  validate?: (value: A) => string | null;
+  validate?: (value: A | B) => string | null;
 };
 
 export type CommandConfig = {
@@ -21,7 +21,7 @@ export interface BaseConfig {
   name: string;
   setup?: () => Promise<void>;
   needsSetup?: () => Promise<boolean>;
-  defaultCommand?: string,
+  defaultCommand?: string;
 }
 
 export interface ConfigWithCommands extends BaseConfig {
@@ -34,6 +34,7 @@ export interface ConfigWithPaths extends BaseConfig {
 
 export type Config = ConfigWithCommands | ConfigWithPaths;
 
-export interface Options extends mri.Argv {
+export interface Options extends Argv {
+  // eslint-disable-next-line typescript/no-explicit-any
   [key: string]: any;
 }

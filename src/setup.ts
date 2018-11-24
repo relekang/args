@@ -1,5 +1,5 @@
-import { CliError } from "./errors";
-import { Config } from "./types";
+import { CliError } from './errors';
+import { Config } from './types';
 
 export async function setup(config: Config) {
   if (config.needsSetup && (await config.needsSetup())) {

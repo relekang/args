@@ -1,4 +1,4 @@
-import { setup } from "../src/setup";
+import { setup } from '../src/setup';
 
 const defaultConfig = { name: 'cli', commands: {} };
 

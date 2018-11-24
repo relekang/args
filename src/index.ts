@@ -3,12 +3,12 @@ import mri from 'mri';
 import path from 'path';
 import chalk from 'chalk';
 
-import { help } from "./help";
-import * as logger from "./logger";
-import { CliError } from "./errors";
-import { parse } from "./parse";
-import { setup } from "./setup";
-import { CommandConfig, Config, Options } from "./types";
+import { help } from './help';
+import * as logger from './logger';
+import { CliError } from './errors';
+import { parse } from './parse';
+import { setup } from './setup';
+import { CommandConfig, Config, Options } from './types';
 
 export * from './errors';
 

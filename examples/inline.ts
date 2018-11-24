@@ -1,5 +1,5 @@
 #!/usr/bin/env ts-node
-import { args, CliError } from "../src";
+import { args, CliError } from '../src';
 
 args({
   name: 'supercli',

@@ -1,8 +1,8 @@
-import mri from "mri";
-import { CliError } from "./errors";
-import { CommandConfig, CommandOption, Options } from "./types";
+import mri from 'mri';
+import { CliError } from './errors';
+import { CommandConfig, CommandOption, Options } from './types';
 
-function evaluateOption(item: CommandOption, value: any) {
+function evaluateOption<A, B>(item: CommandOption<A, B>, value: A): B {
   if (item.required && !value) {
     throw new CliError({
       message: `Missing required argument "${item.name}"`,
@@ -10,12 +10,14 @@ function evaluateOption(item: CommandOption, value: any) {
       showHelp: true,
     });
   }
-  value = item.transform ? item.transform(value) : value;
-  if (!value) {
-    return value;
+  let transformed = item.transform
+    ? item.transform(value)
+    : ((value as unknown) as B);
+  if (!transformed) {
+    return transformed;
   }
   if (typeof item.validate === 'function') {
-    const error = item.validate(value);
+    const error = item.validate(transformed);
     if (error) {
       throw new CliError({
         message: `Validation error on ${item.name}: ${error}`,
@@ -24,7 +26,7 @@ function evaluateOption(item: CommandOption, value: any) {
       });
     }
   }
-  return value;
+  return transformed;
 }
 
 export function parse(
