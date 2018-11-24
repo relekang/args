@@ -33,7 +33,7 @@ jobs:
            - node_modules/
       - run: yarn lint
 
-  flow:
+  typescript:
     docker:
       - image: circleci/node:8
 
@@ -47,7 +47,7 @@ jobs:
          key: v1-yarn-{{ checksum "yarn.lock" }}
          paths:
            - node_modules/
-      - run: yarn flow check
+      - run: yarn tsc
 
   build:
     docker:
@@ -72,5 +72,5 @@ workflows:
     jobs:
       - tests
       - lint
-      - flow
+      - tsc
       - build
