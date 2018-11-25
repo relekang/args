@@ -22,6 +22,7 @@ export interface BaseConfig {
   setup?: () => Promise<void> | void;
   needsSetup?: () => Promise<boolean> | boolean;
   defaultCommand?: string;
+  commandPackagePrefixes?: string[];
 }
 
 export interface ConfigWithCommands extends BaseConfig {

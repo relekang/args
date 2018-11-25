@@ -38,6 +38,17 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
     command = requireCommand(path.join(config.commandsPath, subCommand));
   }
 
+  if (
+    !command &&
+    config.commandPackagePrefixes &&
+    config.commandPackagePrefixes.length > 0
+  ) {
+    const prefix = config.commandPackagePrefixes.find(item =>
+      requireCommand(item + subCommand)
+    );
+    command = requireCommand(prefix + subCommand);
+  }
+
   if (command) {
     const options: Options = parse(command, args);
     await command.run(options);
