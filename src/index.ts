@@ -12,6 +12,16 @@ import { CommandConfig, Config, Options } from './types';
 
 export * from './errors';
 
+function requireCommand(p: string) {
+  try {
+    return require(p);
+  } catch (error) {
+    if (error.code !== 'MODULE_NOT_FOUND') {
+      throw error;
+    }
+  }
+}
+
 async function __args(config: Config, subCommand: string, args: Array<string>) {
   await setup(config);
   if (subCommand === 'help') {
@@ -25,7 +35,7 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
     command = config.commands[subCommand];
   } else {
     // @ts-ignore
-    command = require(path.join(config.commandsPath, subCommand));
+    command = requireCommand(path.join(config.commandsPath, subCommand));
   }
 
   if (command) {
