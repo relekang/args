@@ -8,36 +8,68 @@ import { promisify } from 'util';
 import { Config, CommandConfig, CommandOption, Options } from './types';
 
 import * as logger from './logger';
+import { findSubCommand } from './subCommand';
 
 const readdir = promisify(fs.readdir);
 
 function values<A>(o: { [key: string]: A }): Array<A> {
-  // $FlowFixMe
   return Object.values(o);
+}
+
+function findCommandDependencies(
+  prefixes: string[],
+  dependencies: { [key: string]: string } | undefined
+) {
+  if (!dependencies) {
+    return {};
+  }
+  return Object.keys(dependencies)
+    .filter(name => prefixes.find(prefix => name.indexOf(prefix) === 0))
+    .reduce((lastValue, name) => {
+      const command = require(name);
+      return { ...lastValue, [command.name]: command };
+    }, {});
 }
 
 async function getCommands(
   config: Config
 ): Promise<{ [key: string]: CommandConfig }> {
+  let commands: { [key: string]: CommandConfig };
   // @ts-ignore
   if (config.commands) {
     // @ts-ignore
-    return config.commands;
+    commands = config.commands;
+  } else {
+    // @ts-ignore
+    const commandsPath: string = config.commandsPath;
+    commands = (await readdir(commandsPath))
+      .filter(file => /\.[jt]s$/.test(file))
+      .reduce(
+        (lastValue, file) => ({
+          ...lastValue,
+          [file.replace(/.[jt]s$/, '')]: require(path.join(commandsPath, file)),
+        }),
+        {}
+      );
   }
-  // @ts-ignore
-  return (await readdir(config.commandsPath))
-    .filter(file => /\.[jt]s$/.test(file))
-    .reduce(
-      (lastValue, file) => ({
-        ...lastValue,
-        [file.replace(/.[jt]s$/, '')]: require(path.join(
-          // @ts-ignore
-          config.commandsPath,
-          file
-        )),
-      }),
-      {}
-    );
+  if (
+    config.commandPackagePrefixes &&
+    config.commandPackagePrefixes.length > 0 &&
+    config.packageInfo
+  ) {
+    commands = {
+      ...commands,
+      ...findCommandDependencies(
+        config.commandPackagePrefixes,
+        config.packageInfo.devDependencies
+      ),
+      ...findCommandDependencies(
+        config.commandPackagePrefixes,
+        config.packageInfo.dependencies
+      ),
+    };
+  }
+  return commands;
 }
 
 export async function createCommandsList(config: Config) {
@@ -100,27 +132,12 @@ export function createSubCommandHelp(name: string, command: CommandConfig) {
   return lines.join('\n');
 }
 
-function findSubCommand(
-  config: Config,
-  name: string
-): CommandConfig | undefined {
-  // @ts-ignore
-  if (config.commands) {
-    // @ts-ignore
-    return config.commands[name];
-  } else {
-    try {
-      // @ts-ignore
-      return require(path.join(config.commandsPath, name));
-    } catch (error) {
-      return undefined;
-    }
-  }
-}
-
 export async function help(config: Config, options: Options) {
   const dashes = '--------------------------';
-  const subCommand = findSubCommand(config, options._[0]);
+  let subCommand;
+  if (options._.length > 0) {
+    subCommand = findSubCommand(config, options._[0]);
+  }
   logger.error(chalk`{gray ${dashes}} {bold ${config.name}} {gray ${dashes}}`);
   logger.error('');
   if (subCommand) {

@@ -19,9 +19,15 @@ export type CommandConfig = {
 
 export interface BaseConfig {
   name: string;
+  packageInfo?: {
+    version?: string;
+    dependencies?: { [key: string]: string };
+    devDependencies?: { [key: string]: string };
+  };
   setup?: () => Promise<void> | void;
   needsSetup?: () => Promise<boolean> | boolean;
   defaultCommand?: string;
+  commandPackagePrefixes?: string[];
 }
 
 export interface ConfigWithCommands extends BaseConfig {

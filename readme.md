@@ -5,6 +5,8 @@
 Just another _opinionated_ lazy argument parser. This library is made to be
 opinionated about the structure of node cli application. It strives to give
 you a most of what you would need out of the box if you agree with its opinions.
+The core principal is to co-locate the comman configuration with the command code
+so it is stored in the same file.
 
 ## Installation
 
@@ -77,6 +79,7 @@ args({
 ### Global options 
 * name - required string - The name of the cli
 * defaultCommand - optional string - Set a command as default command. This is `"help"` as default.
+* commandPackagePrefixes - optional string[] - Prefixes for loading commands from separate packages. See package-import.ts in examples.
 
 ### Creating a command
 

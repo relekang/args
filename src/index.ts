@@ -1,6 +1,5 @@
 /* eslint-disable global-require */
 import mri from 'mri';
-import path from 'path';
 import chalk from 'chalk';
 
 import { help } from './help';
@@ -8,19 +7,10 @@ import * as logger from './logger';
 import { CliError } from './errors';
 import { parse } from './parse';
 import { setup } from './setup';
-import { CommandConfig, Config, Options } from './types';
+import { Config, Options } from './types';
+import { findSubCommand } from './subCommand';
 
 export * from './errors';
-
-function requireCommand(p: string) {
-  try {
-    return require(p);
-  } catch (error) {
-    if (error.code !== 'MODULE_NOT_FOUND') {
-      throw error;
-    }
-  }
-}
 
 async function __args(config: Config, subCommand: string, args: Array<string>) {
   await setup(config);
@@ -28,15 +18,7 @@ async function __args(config: Config, subCommand: string, args: Array<string>) {
     return help(config, mri(args));
   }
 
-  let command: CommandConfig;
-  // @ts-ignore
-  if (config.commands) {
-    // @ts-ignore
-    command = config.commands[subCommand];
-  } else {
-    // @ts-ignore
-    command = requireCommand(path.join(config.commandsPath, subCommand));
-  }
+  const command = findSubCommand(config, subCommand);
 
   if (command) {
     const options: Options = parse(command, args);

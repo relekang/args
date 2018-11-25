@@ -29,6 +29,7 @@
     "word-wrap": "^1.2.3"
   },
   "devDependencies": {
+    "@args-tester/test": "./examples/packaged-commands/test",
     "@types/jest": "^23.3.9",
     "@types/mri": "^1.1.0",
     "@types/node": "^10.12.10",

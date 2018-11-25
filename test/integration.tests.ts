@@ -57,13 +57,13 @@ test('args should parse the named option', async () => {
 test('args should show help screen', async () => {
   await args(config)(['node', 'cli', 'help']);
 
-  // @ts-ignore flow does not understand mocks
+  // @ts-ignore does not understand mocks
   expect(logger.error.mock.calls.join('\n')).toMatchSnapshot();
 });
 
 test('args should show help screen for specific command', async () => {
   await args(config)(['node', 'cli', 'help', 'test']);
 
-  // @ts-ignore flow does not understand mocks
+  // @ts-ignore does not understand mocks
   expect(logger.error.mock.calls.join('\n')).toMatchSnapshot();
 });
