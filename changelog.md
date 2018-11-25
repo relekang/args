@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/relekang/args/compare/v1.0.0...v1.1.0) (2018-11-25)
+
+
+### Bug Fixes
+
+* Make requiring missing command not throw ([10d4670](https://github.com/relekang/args/commit/10d4670))
+
+
+### Features
+
+* Add support for packaged sub-commands ([824e00f](https://github.com/relekang/args/commit/824e00f))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/relekang/args/compare/v1.0.0-alpha.12...v1.0.0) (2018-11-24)
 
