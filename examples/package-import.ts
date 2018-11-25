@@ -6,9 +6,11 @@ import args from '../src';
 args({
   name: 'supercli',
   defaultCommand: 'test',
+  packageInfo: require('../package.json'),
   commands: {
     one: {
       name: 'one',
+      help: 'Command loaded from command object in config',
       run: () => {
         console.log('one');
       },
