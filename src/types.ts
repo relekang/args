@@ -17,6 +17,23 @@ export type CommandConfig = {
   namedOptions?: Array<CommandOption>;
 };
 
+export interface SingleCommandConfig {
+  single: true;
+  name: string;
+  help: string;
+  packageInfo?: {
+    version?: string;
+    dependencies?: { [key: string]: string };
+    devDependencies?: { [key: string]: string };
+  };
+  setup?: () => Promise<void> | void;
+  needsSetup?: () => Promise<boolean> | boolean;
+  run: (o: Options) => void | Promise<void>;
+  manual?: string;
+  positionalOptions?: Array<CommandOption>;
+  namedOptions?: Array<CommandOption>;
+}
+
 export interface BaseConfig {
   name: string;
   packageInfo?: {

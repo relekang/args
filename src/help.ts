@@ -5,7 +5,13 @@ import path from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
 
-import { Config, CommandConfig, CommandOption, Options } from './types';
+import {
+  Config,
+  CommandConfig,
+  CommandOption,
+  Options,
+  SingleCommandConfig,
+} from './types';
 
 import * as logger from './logger';
 import { findSubCommand } from './subCommand';
@@ -96,10 +102,13 @@ export function createPositionalUsage(command: CommandConfig) {
     .join(' ');
 }
 
-export function createUsageString(name: string, command: CommandConfig) {
+export function createUsageString(
+  cliName: string | undefined,
+  command: CommandConfig
+) {
   const positionals = createPositionalUsage(command);
   return (
-    `Usage: ${name} ${command.name}` +
+    `Usage: ${cliName} ${command.name}` +
     (positionals ? ` ${positionals}` : '') +
     (command.namedOptions ? ' [--options]' : '')
   );
@@ -109,11 +118,14 @@ export function createOptionHelpString(option: CommandOption) {
   return `  - ${option.name}${option.help ? ` - ${option.help}` : ''}`;
 }
 
-export function createSubCommandHelp(name: string, command: CommandConfig) {
+export function createSubCommandHelp(
+  cliName: string | undefined,
+  command: CommandConfig
+) {
   let lines = [
     chalk`{bold ${command.name}} - ${command.help} `,
     '\n',
-    createUsageString(name, command),
+    createUsageString(cliName, command),
     command.manual ? '\n' + wrap(command.manual, { width: 80 }) : '',
   ];
   if (command.positionalOptions) {
@@ -133,18 +145,35 @@ export function createSubCommandHelp(name: string, command: CommandConfig) {
   return lines.join('\n');
 }
 
-export async function help(config: Config, options: Options) {
-  const dashes = '--------------------------';
+const dashes = '--------------------------';
+export async function multiCommandHelp(config: Config, options: Options) {
   let subCommand;
-  if (options._.length > 0) {
-    subCommand = findSubCommand(config, options._[0]);
+  if (options._.length > 1) {
+    subCommand = findSubCommand(config, options._[1]);
   }
   logger.error(chalk`{gray ${dashes}} {bold ${config.name}} {gray ${dashes}}`);
   logger.error('');
   if (subCommand) {
     logger.error(createSubCommandHelp(config.name, subCommand));
   } else {
-    logger.error(chalk.bold`Commands: `);
+    logger.error(chalk.bold`Commands:`);
     logger.error(await createCommandsList(config));
   }
+}
+
+export async function singleCommandHelp(config: SingleCommandConfig) {
+  logger.error(chalk`{gray ${dashes}} {bold ${config.name}} {gray ${dashes}}`);
+  logger.error('');
+  logger.error(createSubCommandHelp(undefined, config));
+}
+
+export async function help(
+  config: Config | SingleCommandConfig,
+  options: Options
+) {
+  // @ts-ignore
+  if (config.single) {
+    return singleCommandHelp(config as SingleCommandConfig);
+  }
+  return multiCommandHelp(config as Config, options);
 }
