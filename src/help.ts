@@ -44,6 +44,7 @@ async function getCommands(
     const commandsPath: string = config.commandsPath;
     commands = (await readdir(commandsPath))
       .filter(file => /\.[jt]s$/.test(file))
+      .filter(file => !/\.d\.ts$/.test(file))
       .reduce(
         (lastValue, file) => ({
           ...lastValue,
