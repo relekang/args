@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/relekang/args/compare/v1.1.0...v1.1.1) (2018-12-02)
+
+
+### Bug Fixes
+
+* Add filtering of libdefs from commandsPath ([6dc1170](https://github.com/relekang/args/commit/6dc1170))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/relekang/args/compare/v1.0.0...v1.1.0) (2018-11-25)
 
