@@ -108,7 +108,7 @@ export function createUsageString(
 ) {
   const positionals = createPositionalUsage(command);
   return (
-    `Usage: ${cliName} ${command.name}` +
+    `Usage: ${cliName ? cliName + ' ' : ''}${command.name}` +
     (positionals ? ` ${positionals}` : '') +
     (command.namedOptions ? ' [--options]' : '')
   );

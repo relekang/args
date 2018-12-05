@@ -37,7 +37,7 @@ exports[`single-command args should show help screen 1`] = `
 [1msupercli[22m - Testing testing 
 
 
-Usage: undefined supercli <first> [<second>] [--options]
+Usage: supercli <first> [<second>] [--options]
 
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis 
   ligula, vulputate tincidunt consectetur sed, euismod sit amet dolor. Cras 
