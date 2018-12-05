@@ -91,7 +91,9 @@ export async function createCommandsList(config: Config) {
       const spacing = new Array(Math.max(1, length - command.name.length + 1))
         .fill(' ')
         .join('');
-      return `${command.name}${spacing} - ${command.help || ''}`;
+      return `${command.name}${spacing}${
+        command.help ? ` - ${command.help}` : ''
+      }`;
     })
     .join('\n');
 }
@@ -123,7 +125,7 @@ export function createSubCommandHelp(
   command: CommandConfig
 ) {
   let lines = [
-    chalk`{bold ${command.name}} - ${command.help} `,
+    chalk`{bold ${command.name}}${command.help ? ` - ${command.help}` : ''} `,
     '\n',
     createUsageString(cliName, command),
     command.manual ? '\n' + wrap(command.manual, { width: 80 }) : '',

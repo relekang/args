@@ -10,7 +10,7 @@ export type CommandOption<A = any, B = any> = {
 
 export type CommandConfig = {
   name: string;
-  help: string;
+  help?: string;
   run: (o: Options) => void | Promise<void>;
   manual?: string;
   positionalOptions?: Array<CommandOption>;
@@ -20,7 +20,7 @@ export type CommandConfig = {
 export interface SingleCommandConfig {
   single: true;
   name: string;
-  help: string;
+  help?: string;
   packageInfo?: {
     version?: string;
     dependencies?: { [key: string]: string };

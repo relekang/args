@@ -1,4 +1,9 @@
-import { createPositionalUsage, createUsageString } from '../src/help';
+import {
+  createPositionalUsage,
+  createUsageString,
+  createCommandsList,
+} from '../src/help';
+import { Config } from '../src/types';
 
 test('createPositionalUsage should create string of positionals options', () => {
   const command = {
@@ -64,5 +69,36 @@ test('createUsageString should create usage string without optionals', () => {
 
   expect(createUsageString('./cli.js', command)).toEqual(
     'Usage: ./cli.js command'
+  );
+});
+
+test('createUsageString should create usage string', () => {
+  const command = {
+    name: 'command',
+    help: 'Test command',
+    run: () => {},
+    positionalOptions: [
+      { name: 'first', required: true },
+      { name: 'second', required: false },
+    ],
+    namedOptions: [{ name: 'test' }],
+  };
+
+  expect(createUsageString(undefined, command)).toEqual(
+    'Usage: command <first> [<second>] [--options]'
+  );
+});
+
+test('createCommandsList should creat list of commands with and without help', async () => {
+  // @ts-ignore
+  const config: Config = {
+    name: 'supercli',
+    commands: {
+      test: { name: 'test' },
+      test2: { name: 'test2', help: 'Testing testing' },
+    },
+  };
+  expect(await createCommandsList(config)).toEqual(
+    'test  \ntest2  - Testing testing'
   );
 });
